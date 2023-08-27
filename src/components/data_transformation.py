@@ -26,7 +26,7 @@ class DataTransformation:
         '''
 
         try:
-            num_cols = ['duration', 'src_bytes', 'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised', 'root_shell', 'su_attempted', 'num_root', 'num_file_creations', 'num_shells', 'num_access_files', 'num_outbound_cmds', 'is_host_login', 'is_guest_login', 'count', 'srv_count', 'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate', 'same_srv_rate', 'diff_srv_rate', 'srv_diff_host_rate', 'dst_host_count', 'dst_host_srv_count', 'dst_host_same_srv_rate', 'dst_host_diff_srv_rate', 'dst_host_same_src_port_rate', 'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'level', 'attack']
+            num_cols = ['duration', 'src_bytes', 'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised', 'root_shell', 'su_attempted', 'num_root', 'num_file_creations', 'num_shells', 'num_access_files', 'num_outbound_cmds', 'is_host_login', 'is_guest_login', 'count', 'srv_count', 'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate', 'same_srv_rate', 'diff_srv_rate', 'srv_diff_host_rate', 'dst_host_count', 'dst_host_srv_count', 'dst_host_same_srv_rate', 'dst_host_diff_srv_rate', 'dst_host_same_src_port_rate', 'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'level']
 
             cat_cols = ['protocol_type', 'service', 'flag']
 
@@ -65,15 +65,46 @@ class DataTransformation:
             logging.info("Obtaining preprocessing object")
 
             preprocessor_obj = self.data_transformer_object()
+            num_cols = ['duration', 'src_bytes', 'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'hot', 'num_failed_logins', 'logged_in', 'num_compromised', 'root_shell', 'su_attempted', 'num_root', 'num_file_creations', 'num_shells', 'num_access_files', 'num_outbound_cmds', 'is_host_login', 'is_guest_login', 'count', 'srv_count', 'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate', 'same_srv_rate', 'diff_srv_rate', 'srv_diff_host_rate', 'dst_host_count', 'dst_host_srv_count', 'dst_host_same_srv_rate', 'dst_host_diff_srv_rate', 'dst_host_same_src_port_rate', 'dst_host_srv_diff_host_rate', 'dst_host_serror_rate', 'dst_host_srv_serror_rate', 'dst_host_rerror_rate', 'dst_host_srv_rerror_rate', 'level']
 
+            cat_cols = ['protocol_type', 'service', 'flag']
+
+            target_feature = "attack"
+
+            input_feature_train_df = train_df.drop([target_feature], axis=1)
+            target_feature_train_df = train_df[target_feature]
+
+            input_feature_test_df = test_df.drop([target_feature], axis=1)
+            target_feature_test_df = test_df[target_feature]
+
+            logging.info("applying preprocessing pipeline of train and test data")
+
+            input_feature_train_arr = preprocessor_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr = preprocessor_obj.fit_transform(input_feature_test_df)
             
-            target_train_df = train_df["attack"]
-            target_test_df = test_df["attack"]
+            # columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
+            # 'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'hot',
+            # 'num_failed_logins', 'logged_in', 'num_compromised', 'root_shell',
+            # 'su_attempted', 'num_root', 'num_file_creations', 'num_shells',
+            # 'num_access_files', 'num_outbound_cmds', 'is_host_login',
+            # 'is_guest_login', 'count', 'srv_count', 'serror_rate',
+            # 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate', 'same_srv_rate',
+            # 'diff_srv_rate', 'srv_diff_host_rate', 'dst_host_count',
+            # 'dst_host_srv_count', 'dst_host_same_srv_rate',
+            # 'dst_host_diff_srv_rate', 'dst_host_same_src_port_rate',
+            # 'dst_host_srv_diff_host_rate', 'dst_host_serror_rate',
+            # 'dst_host_srv_serror_rate', 'dst_host_rerror_rate',
+            # 'dst_host_srv_rerror_rate', 'level', 'attack']
+            # train_dataf = pd.DataFrame(data=input_feature_train_arr, columns=columns)
+            # test_dataf = pd.DataFrame(data=input_feature_test_arr, columns=columns)
 
+            train_arr = np.c_[
+                input_feature_train_arr, np.array(target_feature_train_df)
+            ]
 
-            input_feature_train_arr = preprocessor_obj.fit_transform(train_df)
-            input_feature_test_arr = preprocessor_obj.fit_transform(test_df)
-
+            test_arr = np.c_[
+                input_feature_test_arr, np.array(target_feature_test_df)
+            ]
             
             logging.info("saved preprocessing object")
 
@@ -83,8 +114,8 @@ class DataTransformation:
             )
 
             return(
-                input_feature_train_arr,
-                input_feature_test_arr,
+                train_arr,
+                test_arr,
                 self.data_transformation_config.preprocessor_obj_file_path
             )
         except Exception as e:
