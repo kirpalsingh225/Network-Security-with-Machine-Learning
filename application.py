@@ -4,10 +4,10 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 ## Route for home page
-@app.route("/")
+@application.route("/")
 def home():
     return render_template("home.html")
 
@@ -15,11 +15,11 @@ def home():
 # def show(pre):
 #     return "the precision was" + str(pre)
 
-@app.route("/predict")
-def predict():
-    return render_template("predict.html")
+# @application.route("/predict")
+# def predict():
+#     return render_template("predict.html")
 
-@app.route("/submit", methods=["POST", "GET"])
+@application.route("/submit", methods=["POST", "GET"])
 def submit():
    if request.method=="POST":
         data = CustomData(
