@@ -4,13 +4,309 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Predict</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .form{
+            background-color: #fff;
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+            margin-left: 300px;
+            margin-right: 300px;
+            margin-top: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+        }
+        body {
+            background-color: #f2f2f2;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .row{
+            display: flex;
+            padding-top: 20px;
+            justify-content: space-around;
+            margin-left: 10px;
+        }
+
+        
+        .protocol{
+            color: red;
+        }
+        .form-control{
+            border-radius: 4px;
+            background-color: white;
+            width: 80px;
+        }
+        h4{
+            text-align: center;
+            font-size: 30px;
+            margin-top: 40px;
+        }
+        
+        
+    </style>
+    
 </head>
 <body>
-        <form action="/submit" method="post">
-            <label for="cols">duration</label>
-            <input type="text" id="duration" name="duration" placeholder="0"><br><br>
-            <input type="submit" value="Submit">
-          </form>
+
+        <h4>Netowork Security with Machine Learning</h4>
+        <div class="form">
+        <form action="{{url_for('submit')}}" method="POST">
+            <div class="row">
+                    <label for="protocol_type">Protocol Type</label>
+                    <select id="protocol" name="protocol-type" type="text" class="form-control">
+                        <option value="udp">udp</option>
+                        <option value="icmp">icmp</option>
+                        <option value="tcp">tcp</option>
+                      </select>
+                  
+                    <label for="service">service</label>
+                    <select id="service" name="service" type="text" class="form-control">
+                        <option value="http">http</option>
+                        <option value="private">private</option>
+                        <option value="domain_u">domain_u</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="cols">Flag</label>
+                    <select id="flag" name="flag" type="text" class="form-control">
+                        <option value="SF">SF</option>
+                        <option value="S0">S0</option>
+                        <option value="REJ">REJ</option>
+                      </select>
+                  
+                    <label for="dst_host_srv_rerror_rate">Dst hs rerror rate</label>
+                    <input type="text" id="dst_host_srv_rerror_rate" name="dst_host_srv_rerror_rate" placeholder="0"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="land">Land</label>
+                    <select id="land" name="land" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                      </select>
+                  
+                    <label for="wf">Wrong Fragment</label>
+                    <select id="wrong-fragment" name="wrong-fragment" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="3">3</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="urgent">Urgent</label>
+                    <select id="urgent" name="urgent" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </select>
+                  
+                    <label for="failed_logins">No of Failed Logins</label>
+                    <select id="failed_logins" name="failed_logins" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="logged_in">Loggedin</label>
+                    <select id="logged_in" name="logged_in" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                      </select>
+                  
+                    <label for="root_shell">Root Shell</label>
+                    <select id="root_shell" name="root_shell" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="su_attempt">Su Attempted</label>
+                    <select id="su_attempt" name="su_attempt" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                  
+                    <label for="num_shells">No of Shells</label>
+                    <select id="num_shells" name="num_shells" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="num_access_files">No of Files Accessed</label>
+                    <select id="num_access_files" name="num_access_files" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                      </select>
+                  
+                    <label for="num_outbound_cmds">No of outbound cmd</label>
+                    <select id="num_outbound_cmds" name="num_outbound_cmds" type="text" class="form-control">
+                        <option value="0">0</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="is_host_login">Host Login</label>
+                    <select id="is_host_login" name="is_host_login" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                      </select>
+                  
+                    <label for="is_guest_login">Guest Login</label>
+                    <select id="is_guest_login" name="is_guest_login" type="text" class="form-control">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                      </select>
+                  
+            </div>
+            <div class="row">
+                    <label for="level">Level</label>
+                    <select id="level" name="level" type="text" class="form-control">
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                      </select>
+                  
+                    <label for="duration">Duration</label>
+                    <input type="text" id="duration" name="duration" placeholder="Enter the duration"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="src_bytes">Src Bytes</label>
+                    <input type="text" id="src_bytes" name="src_bytes" placeholder="Enter the src bytes"><br><br>
+                  
+                    <label for="dst_bytes">Dest Bytes</label>
+                    <input type="text" id="dst_bytes" name="dst_bytes" placeholder="Enter the dst bytes"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="hot">Hot</label>
+                    <input type="text" id="hot" name="hot" placeholder="Enter hot"><br><br>
+                  
+                    <label for="num_compromised">Num Compressed</label>
+                    <input type="text" id="num_compromised" name="num_compromised" placeholder="Enter num compressed"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="num_root">No root</label>
+                    <input type="text" id="num_root" name="num_root" placeholder="Enter num root"><br><br>
+                  
+                    <label for="num_file_creations">No file creations</label>
+                    <input type="text" id="duration" name="file_creation" placeholder="Enter no file creations"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="count">Count</label>
+                    <input type="text" id="count" name="count" placeholder="Enter count"><br><br>
+                  
+                    <label for="srv_count">Srv Count</label>
+                    <input type="text" id="srv_count" name="srv_count" placeholder="Enter srv count"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="serror_rate">Serror Rate</label>
+                    <input type="text" id="serror_rate" name="serror_rate" placeholder="Enter serror rate"><br><br>
+                  
+                    <label for="srv_serror_rate">Srv serror rate</label>
+                    <input type="text" id="srv_serror_rate" name="srv_serror_rate" placeholder="Enter srv serror rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="rerror_rate">Rerror rate</label>
+                    <input type="text" id="rerror_rate" name="rerror_rate" placeholder="Enter rerror rate"><br><br>
+                  
+                    <label for="srv_rerror_rate">Srv rerrorrate</label>
+                    <input type="text" id="srv_rerror_rate" name="srv_rerror_rate" placeholder="Enter srv rerror rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="same_srv_rate">Same srv rate</label>
+                    <input type="text" id="same_srv_rate" name="same_srv_rate" placeholder="Enter same srv rate"><br><br>
+                  
+                    <label for="diff_srv_rate">Diff srv rate</label>
+                    <input type="text" id="diff_srv_rate" name="diff_srv_rate" placeholder="Enter diff srv rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="srv_diff_host_rate">Srv diff host rate</label>
+                    <input type="text" id="srv_diff_host_rate" name="srv_diff_host_rate" placeholder="Enter srv diff h rate"><br><br>
+                  
+                    <label for="dst_host_count">Dst Host Count</label>
+                    <input type="text" id="dst_host_count" name="dst_host_count" placeholder="Enter dst h rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="dst_host_srv_count">Dst host srv count</label>
+                    <input type="text" id="dst_host_srv_count" name="dst_host_srv_count" placeholder="Enter dst h srv rate"><br><br>
+                  
+                    <label for="dst_host_same_srv_rate">Dst host same srv rate</label>
+                    <input type="text" id="dst_host_same_srv_rate" name="dst_host_same_srv_rate" placeholder="Enter dst h same srv rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="dst_host_diff_srv_rate">Dst host diff srv rate</label>
+                    <input type="text" id="dst_host_diff_srv_rate" name="dst_host_diff_srv_rate" placeholder="Enter dst h srv rate"><br><br>
+                  
+                    <label for="dst_host_same_src_port_rate">Dst host same src port rate</label>
+                    <input type="text" id="dst_host_same_src_port_rate" name="dst_host_same_src_port_rate" placeholder="Enter dst host src port rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                    <label for="dst_host_srv_diff_host_rate">dst host srv diff host rate</label>
+                    <input type="text" id="dst_host_srv_diff_host_rate" name="dst_host_srv_diff_host_rate" placeholder="Enter dst h srv diff h rate"><br><br>
+                  
+    
+        
+                  
+                    <label for="dst_host_serror_rate">dst host serror rate</label>
+                    <input type="text" id="dst_host_serror_rate" name="dst_host_serror_rate" placeholder="Enter dst h serror rate"><br><br>
+                  
+            </div>
+            <div class="row">
+                
+                    <label for="dst_host_srv_serror_rate">dst host srv serror rate</label>
+                    <input type="text" id="dst_host_srv_serror_rate" name="dst_host_srv_serror_rate" placeholder="Enter dst h srv serror rate"><br><br>
+                  
+    
+        
+                  
+                    <label for="dst_host_rerror_rate">dst host rerror rate</label>
+                    <input type="text" id="dst_host_rerror_rate" name="dst_host_rerror_rate" placeholder="Enter dst h rerror rate"><br><br>
+                
+            </div>
+            <br>
+            <br>
+            <div class="prediction" role="alert">
+                The Network Security Level is : <strong>{{final_result}}</strong>
+            </div>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            <br>
+            <br>
+        </form>
+
+        </div>
     
 </body>
 </html>
