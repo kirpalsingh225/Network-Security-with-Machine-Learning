@@ -122,3 +122,8 @@ Start the server
   python src/components/data_ingestion.py
 ```
 
+## User Interface
+![img](https://github.com/kirpalsingh225/Network-Security-with-Machine-Learning/blob/main/assets/ui.png)
+
+## Result
+![img](https://github.com/kirpalsingh225/Network-Security-with-Machine-Learning/blob/main/assets/result.png)
