@@ -15,9 +15,9 @@ def home():
 # def show(pre):
 #     return "the precision was" + str(pre)
 
-# @application.route("/predict")
-# def predict():
-#     return render_template("predict.html")
+@application.route("/predict")
+def predict():
+    return render_template("predict.html")
 
 @application.route("/submit", methods=["POST", "GET"])
 def submit():
@@ -81,5 +81,5 @@ def submit():
         
 
 if __name__=="__main__":
-    app.run()
+    application.run()
 
