@@ -1,5 +1,6 @@
 import os
 import sys
+import seaborn as sns
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 from src.exception import CustomException
@@ -49,6 +50,7 @@ class ModelTrainer:
             )
 
             predicted = best_model.predict(x_test)
+            sns.heatmap(confusion_matrix(predicted, y_test), fmt='g', annot=True)
             precision = precision_score(predicted, y_test, average='weighted')
             return precision
 
